@@ -25,7 +25,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (color-theme-sanityinc-tomorrow))))
+ '(package-selected-packages (quote (chess helm magit color-theme-sanityinc-tomorrow))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -35,3 +35,25 @@
 
 (require 'color-theme-sanityinc-tomorrow)
 (load-theme 'sanityinc-tomorrow-eighties t)
+
+;;; start helm
+
+(require 'helm-config)
+
+(helm-mode 1)
+
+;; from here: http://tuhdo.github.io/helm-intro.html
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+
+(helm-autoresize-mode t)
+
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-x b") 'helm-buffers-list)
+(global-set-key (kbd "M-x") #'helm-M-x)
+
+;; for correcting spelling
+;; works from here: http://stackoverflow.com/questions/16084022/emacs-flyspell-deactivate-c-key-binding
+(eval-after-load "flyspell"
+'(define-key flyspell-mode-map (kbd "C-;") 'helm-flyspell-correct))
